@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="FinishedMatch" representedClassName="FinishedMatch" syncable="YES">
+        <attribute name="awayLogo" optional="YES" attributeType="String"/>
+        <attribute name="awayScore" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awayTeam" optional="YES" attributeType="String"/>
+        <attribute name="groupKey" optional="YES" attributeType="String"/>
+        <attribute name="homeLogo" optional="YES" attributeType="String"/>
+        <attribute name="homeScore" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="homeTeam" optional="YES" attributeType="String"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="league" optional="YES" attributeType="String"/>
+        <attribute name="leagueFlag" optional="YES" attributeType="String"/>
+        <attribute name="matchDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="matchID" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="LiveMatch" representedClassName="LiveMatch" syncable="YES">
+        <attribute name="awayLogo" optional="YES" attributeType="String"/>
+        <attribute name="awayScore" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="awayTeam" optional="YES" attributeType="String"/>
+        <attribute name="homeLogo" optional="YES" attributeType="String"/>
+        <attribute name="homeScore" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="homeTeam" optional="YES" attributeType="String"/>
+        <attribute name="lastUpdated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="leagueFlag" optional="YES" attributeType="String"/>
+        <attribute name="leauge" optional="YES" attributeType="String"/>
+        <attribute name="matchID" optional="YES" attributeType="String"/>
+        <attribute name="matchTime" optional="YES" attributeType="String"/>
+        <attribute name="minute" optional="YES" attributeType="String"/>
+        <attribute name="priority" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+    </entity>
+</model>
