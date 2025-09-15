@@ -105,7 +105,7 @@ class LiveIndicatorView: UIView {
         // Scale animation
         let scaleAnimation = CABasicAnimation(keyPath: "transform.scale")
         scaleAnimation.fromValue = 1.0
-        scaleAnimation.toValue = 2.5
+        scaleAnimation.toValue = 3.5
         
         // Opacity animation
         let opacityAnimation = CABasicAnimation(keyPath: "opacity")

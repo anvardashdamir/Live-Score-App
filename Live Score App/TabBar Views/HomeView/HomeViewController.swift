@@ -31,14 +31,14 @@ class HomeViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             topSectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            topSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            topSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topSectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            topSectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             topSectionView.heightAnchor.constraint(equalToConstant: 40),
             
             liveNowSection.topAnchor.constraint(equalTo: topSectionView.bottomAnchor, constant: 12),
-            liveNowSection.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            liveNowSection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            liveNowSection.heightAnchor.constraint(equalToConstant: 40),
+            liveNowSection.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            liveNowSection.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            liveNowSection.heightAnchor.constraint(equalToConstant: 20),
 
             
             scrollCollectionView.topAnchor.constraint(equalTo: liveNowSection.bottomAnchor, constant: 12),

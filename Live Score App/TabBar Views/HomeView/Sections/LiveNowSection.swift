@@ -47,13 +47,13 @@ class LiveNowSection: UIView {
         
         NSLayoutConstraint.activate([
             liveNowLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            liveNowLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            liveNowLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             liveNowLabel.heightAnchor.constraint(equalToConstant: 20),
             liveNowLabel.widthAnchor.constraint(equalToConstant: 100),
             
-            seeMoreLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            seeMoreLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             seeMoreLabel.centerYAnchor.constraint(equalTo: liveNowLabel.centerYAnchor),
-            seeMoreLabel.heightAnchor.constraint(equalToConstant: 30),
+            seeMoreLabel.heightAnchor.constraint(equalToConstant: 20),
             seeMoreLabel.widthAnchor.constraint(equalToConstant: 100),
         ])
     }

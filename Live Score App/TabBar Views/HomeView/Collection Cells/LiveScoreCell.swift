@@ -39,13 +39,6 @@ final class LiveScoreCell: UICollectionViewCell {
         return label
     }()
     
-//    private let liveBadge: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-//        label.textColor = .systemGreen
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
     private let liveIndicatorView: LiveIndicatorView = {
         let view = LiveIndicatorView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +83,7 @@ final class LiveScoreCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     // MARK: - Setup
     
     private func setupViews() {
@@ -180,18 +173,18 @@ extension LiveScoreMatch {
             homeTeamLogo: "manutd", // or URL
             awayTeamName: "Nottingham\nForest",
             awayTeamLogo: "forest", // or URL
-            homeScore: 2,
-            awayScore: 1
+            homeScore: 3,
+            awayScore: 0
         ),
         
         LiveScoreMatch(
             leagueName: "La Liga",
-            leagueFlag: "spain_flag", // or URL
+            leagueFlag: "spainFlag",
             isLive: false,
             homeTeamName: "Real\nMadrid",
-            homeTeamLogo: "real_madrid_logo", // or URL
+            homeTeamLogo: "real_madrid_logo",
             awayTeamName: "FC\nBarcelona",
-            awayTeamLogo: "barcelona_logo", // or URL
+            awayTeamLogo: "barcelona_logo",
             homeScore: 3,
             awayScore: 2
         )

@@ -51,12 +51,12 @@ class TopSectionView: UIView {
         addSubview(notificationButton)
         
         NSLayoutConstraint.activate([
-            topImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            topImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             topImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             topImageView.heightAnchor.constraint(equalToConstant: 40),
             topImageView.widthAnchor.constraint(equalToConstant: 120),
             
-            notificationButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            notificationButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             notificationButton.centerYAnchor.constraint(equalTo: topImageView.centerYAnchor),
             notificationButton.heightAnchor.constraint(equalToConstant: 30),
             notificationButton.widthAnchor.constraint(equalToConstant: 30),

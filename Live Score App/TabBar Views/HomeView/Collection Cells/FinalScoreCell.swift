@@ -9,32 +9,44 @@ import UIKit
 
 struct FinalScoreMatch {
     let leagueName: String
+    let leagueFlag: String
+    let isLive: String
     let homeTeamName: String
-    let homeTeamLogo: String // Image name or URL
+    let homeTeamLogo: String
     let awayTeamName: String
-    let awayTeamLogo: String // Image name or URL
+    let awayTeamLogo: String
     let homeScore: Int
     let awayScore: Int
-    let matchDate: Date
+    let matchDate: String
 }
+
 
 class FinalScoreCell: UICollectionViewCell {
     static let identifier = "FinalScoreCell"
     
     // MARK: - UI Elements
-//    private let leagueLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.boldSystemFont(ofSize: 14)
-//        label.textColor = .darkGray
-//        return label
-//    }()
+    private let leagueFlag: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+
+    private let leagueLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private let homeLogo: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
-        iv.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        iv.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        iv.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        iv.heightAnchor.constraint(equalToConstant: 25).isActive = true
         return iv
     }()
     
@@ -42,32 +54,43 @@ class FinalScoreCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
-        iv.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        iv.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        iv.widthAnchor.constraint(equalToConstant: 25).isActive = true
+        iv.heightAnchor.constraint(equalToConstant: 25).isActive = true
         return iv
     }()
     
     private let homeTeamLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .black
+        label.textColor = .white
         return label
     }()
     
     private let awayTeamLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .black
+        label.textColor = .white
         return label
     }()
     
-    private let scoreLabel: UILabel = {
+    private let homeScore: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.textColor = .systemBlue
+        label.textColor = .white
         label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private let awayScore: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     
     private let dateLabel: UILabel = {
         let label = UILabel()
@@ -76,9 +99,21 @@ class FinalScoreCell: UICollectionViewCell {
         return label
     }()
     
+    private let isLive: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .gray
+        return label
+    }()
+
+    
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        contentView.backgroundColor = .cellColour
+        contentView.layer.cornerRadius = 12
+        contentView.clipsToBounds = true
+
         setupLayout()
     }
     
@@ -88,36 +123,45 @@ class FinalScoreCell: UICollectionViewCell {
     
     // MARK: - Layout
     private func setupLayout() {
-        let teamsStack = UIStackView(arrangedSubviews: [homeTeamLabel, awayTeamLabel])
-        teamsStack.axis = .vertical
-        teamsStack.spacing = 4
         
+        let timeStack = UIStackView(arrangedSubviews: [dateLabel, isLive])
+        timeStack.axis = .vertical
+        timeStack.alignment = .center
+        timeStack.spacing = 4
+
         let logosStack = UIStackView(arrangedSubviews: [homeLogo, awayLogo])
         logosStack.axis = .vertical
         logosStack.alignment = .center
         logosStack.spacing = 4
+
+        let teamsStack = UIStackView(arrangedSubviews: [homeTeamLabel, awayTeamLabel])
+        teamsStack.axis = .vertical
+        teamsStack.spacing = 4
         
-        let mainStack = UIStackView(arrangedSubviews: [logosStack, teamsStack, scoreLabel])
+        let scoreStack = UIStackView(arrangedSubviews: [homeScore, awayScore])
+        scoreStack.axis = .vertical
+        scoreStack.alignment = .center
+        scoreStack.spacing = 4
+        
+        let mainStack = UIStackView(arrangedSubviews: [timeStack, logosStack, teamsStack, scoreStack])
         mainStack.axis = .horizontal
         mainStack.spacing = 12
         mainStack.alignment = .center
-        mainStack.distribution = .equalSpacing
+        mainStack.distribution = .fillProportionally
         
-        let container = UIStackView(arrangedSubviews: [dateLabel, mainStack])
-        container.axis = .vertical
-        container.spacing = 8
+//        let container = UIStackView(arrangedSubviews: [dateLabel, mainStack])
+//        container.axis = .vertical
+//        container.spacing = 8
         
-        contentView.addSubview(container)
-        contentView.backgroundColor = .blue
-        container.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(mainStack)
+        mainStack.translatesAutoresizingMaskIntoConstraints = false
+        [dateLabel, isLive, homeLogo, awayLogo, homeTeamLabel, awayTeamLabel, homeScore, awayScore].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: contentView.topAnchor),
-            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            container.widthAnchor.constraint(equalToConstant: 120),
-            container.heightAnchor.constraint(equalToConstant: 50)
+            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
 }
@@ -128,58 +172,68 @@ extension FinalScoreMatch {
     static let mockData: [FinalScoreMatch] = [
         FinalScoreMatch(
             leagueName: "Premier League",
-            homeTeamName: "Arsenal",
-            homeTeamLogo: "arsenal_logo",
-            awayTeamName: "Chelsea",
-            awayTeamLogo: "chelsea_logo",
-            homeScore: 2,
+            leagueFlag: "englandFlag",
+            isLive: "FT",
+            homeTeamName: "Manchester United",
+            homeTeamLogo: "manutd",
+            awayTeamName: "Nottingam Forest",
+            awayTeamLogo: "forest",
+            homeScore: 3,
             awayScore: 0,
-            matchDate: Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
+            matchDate: "15/9"
         ),
         
         FinalScoreMatch(
             leagueName: "Premier League",
-            homeTeamName: "Manchester City",
-            homeTeamLogo: "man_city_logo",
-            awayTeamName: "Tottenham",
-            awayTeamLogo: "tottenham_logo",
-            homeScore: 1,
-            awayScore: 3,
-            matchDate: Calendar.current.date(byAdding: .day, value: -2, to: Date()) ?? Date()
+            leagueFlag: "englandFlag",
+            isLive: "FT",
+            homeTeamName: "Westham United",
+            homeTeamLogo: "westham",
+            awayTeamName: "Arsenal",
+            awayTeamLogo: "arsenal",
+            homeScore: 2,
+            awayScore: 2,
+            matchDate: "14/9"
         ),
-        
+
         FinalScoreMatch(
-            leagueName: "La Liga",
-            homeTeamName: "Atletico Madrid",
-            homeTeamLogo: "atletico_logo",
-            awayTeamName: "Valencia",
-            awayTeamLogo: "valencia_logo",
-            homeScore: 1,
+            leagueName: "Premier League",
+            leagueFlag: "englandFlag",
+            isLive: "FT",
+            homeTeamName: "Chelsea",
+            homeTeamLogo: "chelsea",
+            awayTeamName: "Brighton & Hove Albion",
+            awayTeamLogo: "brighton",
+            homeScore: 2,
             awayScore: 1,
-            matchDate: Calendar.current.date(byAdding: .day, value: -3, to: Date()) ?? Date()
+            matchDate: "15/9"
         ),
-        
+
         FinalScoreMatch(
-            leagueName: "Bundesliga",
-            homeTeamName: "Bayern Munich",
-            homeTeamLogo: "bayern_logo",
-            awayTeamName: "Dortmund",
-            awayTeamLogo: "dortmund_logo",
-            homeScore: 4,
-            awayScore: 2,
-            matchDate: Calendar.current.date(byAdding: .day, value: -4, to: Date()) ?? Date()
+            leagueName: "Premier League",
+            leagueFlag: "englandFlag",
+            isLive: "FT",
+            homeTeamName: "Manchester United",
+            homeTeamLogo: "manutd",
+            awayTeamName: "Nottingam FOrrest",
+            awayTeamLogo: "forest",
+            homeScore: 5,
+            awayScore: 0,
+            matchDate: "14/9"
         ),
-        
+
         FinalScoreMatch(
-            leagueName: "Serie A",
-            homeTeamName: "Juventus",
-            homeTeamLogo: "juventus_logo",
-            awayTeamName: "AC Milan",
-            awayTeamLogo: "milan_logo",
-            homeScore: 0,
-            awayScore: 2,
-            matchDate: Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date()
-        )
+            leagueName: "Premier League",
+            leagueFlag: "englandFlag",
+            isLive: "FT",
+            homeTeamName: "Manchester City",
+            homeTeamLogo: "mancity",
+            awayTeamName: "Leicester City",
+            awayTeamLogo: "leicester",
+            homeScore: 3,
+            awayScore: 1,
+            matchDate: "14/9"
+        ),
     ]
 }
 
@@ -188,7 +242,8 @@ extension FinalScoreMatch {
 extension FinalScoreCell {
     func configure(with match: FinalScoreMatch) {
         // Configure league
-//        leagueLabel.text = match.leagueName
+        leagueLabel.text = match.leagueName
+        leagueFlag.image = UIImage(named: match.leagueFlag)
         
         // Configure teams
         homeTeamLabel.text = match.homeTeamName
@@ -197,12 +252,12 @@ extension FinalScoreCell {
         awayLogo.image = UIImage(named: match.awayTeamLogo) // or load from URL
         
         // Configure score
-        scoreLabel.text = "\(match.homeScore) - \(match.awayScore)"
-        
+        homeScore.text = "\(match.homeScore)"
+        awayScore.text = "\(match.awayScore)"
         // Configure date
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         formatter.timeStyle = .short
-        dateLabel.text = formatter.string(from: match.matchDate)
+        dateLabel.text = match.matchDate
     }
 }
