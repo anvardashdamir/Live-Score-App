@@ -52,3 +52,8 @@ class HomeViewController: UIViewController {
 
 
 
+import SwiftUI
+
+#Preview {
+    HomeViewController()
+}

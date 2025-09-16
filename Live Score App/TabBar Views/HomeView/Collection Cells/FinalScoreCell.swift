@@ -241,20 +241,18 @@ extension FinalScoreMatch {
 // MARK: - FinalScoreCell Configuration
 extension FinalScoreCell {
     func configure(with match: FinalScoreMatch) {
-        // Configure league
+
         leagueLabel.text = match.leagueName
         leagueFlag.image = UIImage(named: match.leagueFlag)
         
-        // Configure teams
         homeTeamLabel.text = match.homeTeamName
         awayTeamLabel.text = match.awayTeamName
-        homeLogo.image = UIImage(named: match.homeTeamLogo) // or load from URL
-        awayLogo.image = UIImage(named: match.awayTeamLogo) // or load from URL
+        homeLogo.image = UIImage(named: match.homeTeamLogo)
+        awayLogo.image = UIImage(named: match.awayTeamLogo)
         
-        // Configure score
         homeScore.text = "\(match.homeScore)"
         awayScore.text = "\(match.awayScore)"
-        // Configure date
+
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         formatter.timeStyle = .short

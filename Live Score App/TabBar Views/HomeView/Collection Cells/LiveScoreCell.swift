@@ -12,9 +12,9 @@ struct LiveScoreMatch {
     let leagueFlag: String
     let isLive: Bool
     let homeTeamName: String
-    let homeTeamLogo: String // Image name or URL
+    let homeTeamLogo: String
     let awayTeamName: String
-    let awayTeamLogo: String // Image name or URL
+    let awayTeamLogo: String
     let homeScore: Int
     let awayScore: Int
 }
@@ -167,12 +167,12 @@ extension LiveScoreMatch {
     static let mockData: [LiveScoreMatch] = [
         LiveScoreMatch(
             leagueName: "Premier League",
-            leagueFlag: "englandFlag", // or URL
+            leagueFlag: "englandFlag",
             isLive: true,
             homeTeamName: "Manchester\nUnited",
-            homeTeamLogo: "manutd", // or URL
+            homeTeamLogo: "manutd",
             awayTeamName: "Nottingham\nForest",
-            awayTeamLogo: "forest", // or URL
+            awayTeamLogo: "forest",
             homeScore: 3,
             awayScore: 0
         ),
@@ -205,10 +205,12 @@ extension LiveScoreCell {
         // Configure teams
         homeLabel.text = match.homeTeamName
         awayLabel.text = match.awayTeamName
-        homeLogo.image = UIImage(named: match.homeTeamLogo) // or load from URL
-        awayLogo.image = UIImage(named: match.awayTeamLogo) // or load from URL
+        homeLogo.image = UIImage(named: match.homeTeamLogo)
+        awayLogo.image = UIImage(named: match.awayTeamLogo)
         
         // Configure score
         scoreLabel.text = "\(match.homeScore) - \(match.awayScore)"
     }
 }
+
+
