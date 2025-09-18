@@ -10,16 +10,8 @@ import CoreData
 
 class ScoreCollectionView: UIView {
     
-//    private lazy var collectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.scrollDirection = .vertical
-//        layout.minimumLineSpacing = 12
-//        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        cv.backgroundColor = .customBackground
-//        cv.translatesAutoresizingMaskIntoConstraints = false
-//        return cv
-//    }()
-    
+    private var leagueSections: [LeagueSection] = []
+        
     private let headerCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -40,13 +32,13 @@ class ScoreCollectionView: UIView {
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
     }()
-
     
     // MARK: - Init
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         setupCollectionView()
         setupConstraints()
+        leagueSections = LeagueSection.mockData
     }
     
     required init?(coder: NSCoder) {
@@ -65,14 +57,8 @@ class ScoreCollectionView: UIView {
         mainCollectionView.dataSource = self
         mainCollectionView.delegate = self
         
-        headerCollectionView.register(
-            LiveScoreCell.self,
-            forCellWithReuseIdentifier: LiveScoreCell.identifier
-        )
-        mainCollectionView.register(
-            FinalScoreCell.self,
-            forCellWithReuseIdentifier: FinalScoreCell.identifier
-        )
+        headerCollectionView.register(LiveScoreCell.self, forCellWithReuseIdentifier: LiveScoreCell.identifier)
+        mainCollectionView.register(MainCollectionCell.self,forCellWithReuseIdentifier: MainCollectionCell.identifier)
     }
     
     private func setupConstraints() {
@@ -97,7 +83,7 @@ extension ScoreCollectionView: UICollectionViewDataSource, UICollectionViewDeleg
         if collectionView == headerCollectionView {
             return LiveScoreMatch.mockData.count
         } else if collectionView == mainCollectionView {
-            return FinalScoreMatch.mockData.count
+            return leagueSections.count
         } else {
             return 0
         }
@@ -111,10 +97,13 @@ extension ScoreCollectionView: UICollectionViewDataSource, UICollectionViewDeleg
             cell.configure(with: match)
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FinalScoreCell.identifier,
-                                                          for: indexPath) as! FinalScoreCell
-            let match = FinalScoreMatch.mockData[indexPath.item]
-            cell.configure(with: match)
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FinalScoreCell.identifier,
+//                                                          for: indexPath) as! FinalScoreCell
+//            let match = FinalScoreMatch.mockData[indexPath.item]
+//            cell.configure(with: match)
+//            return cell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainCollectionCell.identifier, for: indexPath) as! MainCollectionCell
+            cell.configure(with: leagueSections[indexPath.item])
             return cell
         }
     }
@@ -125,7 +114,11 @@ extension ScoreCollectionView: UICollectionViewDataSource, UICollectionViewDeleg
         if collectionView == headerCollectionView {
             return CGSize(width: collectionView.bounds.width - 32, height: 200)
         } else {
-            return CGSize(width: collectionView.bounds.width, height: 80)
+//            return CGSize(width: collectionView.bounds.width, height: 80)
+            let leagueSection = leagueSections[indexPath.item]
+            let width = collectionView.frame.width
+            let height = MainCollectionCell.calculateHeight(for: leagueSection, width: width)
+            return CGSize(width: width, height: height)
         }
     }
 }

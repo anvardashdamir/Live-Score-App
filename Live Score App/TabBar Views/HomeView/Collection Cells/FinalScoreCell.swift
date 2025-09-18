@@ -7,21 +7,7 @@
 
 import UIKit
 
-struct FinalScoreMatch {
-    let leagueName: String
-    let leagueFlag: String
-    let isLive: String
-    let homeTeamName: String
-    let homeTeamLogo: String
-    let awayTeamName: String
-    let awayTeamLogo: String
-    let homeScore: Int
-    let awayScore: Int
-    let matchDate: String
-}
-
-
-class FinalScoreCell: UICollectionViewCell {
+class FinalScoreCell: UITableViewCell {
     static let identifier = "FinalScoreCell"
     
     // MARK: - UI Elements
@@ -108,22 +94,22 @@ class FinalScoreCell: UICollectionViewCell {
 
     
     // MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.backgroundColor = .cellColour
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+          super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .red
         contentView.layer.cornerRadius = 12
         contentView.clipsToBounds = true
 
-        setupLayout()
-    }
-    
+          setupLayout()
+      }
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Layout
     private func setupLayout() {
-        
+                
         let timeStack = UIStackView(arrangedSubviews: [dateLabel, isLive])
         timeStack.axis = .vertical
         timeStack.alignment = .center
@@ -149,101 +135,27 @@ class FinalScoreCell: UICollectionViewCell {
         mainStack.alignment = .center
         mainStack.distribution = .fillProportionally
         
-//        let container = UIStackView(arrangedSubviews: [dateLabel, mainStack])
-//        container.axis = .vertical
-//        container.spacing = 8
-        
         contentView.addSubview(mainStack)
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         [dateLabel, isLive, homeLogo, awayLogo, homeTeamLabel, awayTeamLabel, homeScore, awayScore].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         NSLayoutConstraint.activate([
-            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+//            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+//            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+//            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
         ])
     }
 }
 
-
-// MARK: - Mock Data
-extension FinalScoreMatch {
-    static let mockData: [FinalScoreMatch] = [
-        FinalScoreMatch(
-            leagueName: "Premier League",
-            leagueFlag: "englandFlag",
-            isLive: "FT",
-            homeTeamName: "Manchester United",
-            homeTeamLogo: "manutd",
-            awayTeamName: "Nottingam Forest",
-            awayTeamLogo: "forest",
-            homeScore: 3,
-            awayScore: 0,
-            matchDate: "15/9"
-        ),
-        
-        FinalScoreMatch(
-            leagueName: "Premier League",
-            leagueFlag: "englandFlag",
-            isLive: "FT",
-            homeTeamName: "Westham United",
-            homeTeamLogo: "westham",
-            awayTeamName: "Arsenal",
-            awayTeamLogo: "arsenal",
-            homeScore: 2,
-            awayScore: 2,
-            matchDate: "14/9"
-        ),
-
-        FinalScoreMatch(
-            leagueName: "Premier League",
-            leagueFlag: "englandFlag",
-            isLive: "FT",
-            homeTeamName: "Chelsea",
-            homeTeamLogo: "chelsea",
-            awayTeamName: "Brighton & Hove Albion",
-            awayTeamLogo: "brighton",
-            homeScore: 2,
-            awayScore: 1,
-            matchDate: "15/9"
-        ),
-
-        FinalScoreMatch(
-            leagueName: "Premier League",
-            leagueFlag: "englandFlag",
-            isLive: "FT",
-            homeTeamName: "Manchester United",
-            homeTeamLogo: "manutd",
-            awayTeamName: "Nottingam FOrrest",
-            awayTeamLogo: "forest",
-            homeScore: 5,
-            awayScore: 0,
-            matchDate: "14/9"
-        ),
-
-        FinalScoreMatch(
-            leagueName: "Premier League",
-            leagueFlag: "englandFlag",
-            isLive: "FT",
-            homeTeamName: "Manchester City",
-            homeTeamLogo: "mancity",
-            awayTeamName: "Leicester City",
-            awayTeamLogo: "leicester",
-            homeScore: 3,
-            awayScore: 1,
-            matchDate: "14/9"
-        ),
-    ]
-}
-
-
 // MARK: - FinalScoreCell Configuration
 extension FinalScoreCell {
     func configure(with match: FinalScoreMatch) {
-
-        leagueLabel.text = match.leagueName
-        leagueFlag.image = UIImage(named: match.leagueFlag)
         
         homeTeamLabel.text = match.homeTeamName
         awayTeamLabel.text = match.awayTeamName

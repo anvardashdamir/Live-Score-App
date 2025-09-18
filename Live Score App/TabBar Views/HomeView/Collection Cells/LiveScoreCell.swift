@@ -7,18 +7,6 @@
 
 import UIKit
 
-struct LiveScoreMatch {
-    let leagueName: String
-    let leagueFlag: String
-    let isLive: Bool
-    let homeTeamName: String
-    let homeTeamLogo: String
-    let awayTeamName: String
-    let awayTeamLogo: String
-    let homeScore: Int
-    let awayScore: Int
-}
-
 final class LiveScoreCell: UICollectionViewCell {
     static let identifier = "LiveScoreCell"
     
@@ -160,7 +148,6 @@ final class LiveScoreCell: UICollectionViewCell {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
     }
-    
 }
 
 extension LiveScoreMatch {
@@ -180,20 +167,19 @@ extension LiveScoreMatch {
         LiveScoreMatch(
             leagueName: "La Liga",
             leagueFlag: "spainFlag",
-            isLive: false,
+            isLive: true,
             homeTeamName: "Real\nMadrid",
-            homeTeamLogo: "real_madrid_logo",
+            homeTeamLogo: "realmadrid",
             awayTeamName: "FC\nBarcelona",
-            awayTeamLogo: "barcelona_logo",
-            homeScore: 3,
-            awayScore: 2
+            awayTeamLogo: "barcelona",
+            homeScore: 5,
+            awayScore: 5
         )
     ]
 }
 
 
 extension LiveScoreCell {
-        
     func configure(with match: LiveScoreMatch) {
         // Configure league info
         leagueLabel.text = match.leagueName
