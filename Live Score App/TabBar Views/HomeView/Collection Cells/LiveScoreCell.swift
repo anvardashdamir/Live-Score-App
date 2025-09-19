@@ -63,7 +63,7 @@ final class LiveScoreCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .cellColour
-        contentView.layer.cornerRadius = 12
+        contentView.layer.cornerRadius = 10
         contentView.clipsToBounds = true
         setupViews()
     }
@@ -144,7 +144,7 @@ final class LiveScoreCell: UICollectionViewCell {
     private func setupTeamLabel(_ label: UILabel) {
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .white
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -163,7 +163,6 @@ extension LiveScoreMatch {
             homeScore: 3,
             awayScore: 0
         ),
-        
         LiveScoreMatch(
             leagueName: "La Liga",
             leagueFlag: "spainFlag",

@@ -9,16 +9,13 @@ import UIKit
 
 class LiveIndicatorView: UIView {
     
-    // MARK: - UI Components
     private let pulseLayer = CAShapeLayer()
     private let coreLayer = CAShapeLayer()
     private let liveLabel = UILabel()
     
-    // MARK: - Animation Properties
     private var pulseAnimation: CAAnimationGroup?
     private var isAnimating = false
     
-    // MARK: - Customization Properties
     var coreColor: UIColor = .systemGreen {
         didSet { updateColors() }
     }
@@ -29,7 +26,6 @@ class LiveIndicatorView: UIView {
     
     var animationDuration: TimeInterval = 1.5
     
-    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -40,11 +36,9 @@ class LiveIndicatorView: UIView {
         setupView()
     }
     
-    // MARK: - Setup
     private func setupView() {
         backgroundColor = .clear
         
-        // Setup live label
         liveLabel.text = "LIVE"
         liveLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         liveLabel.textColor = .systemGreen
@@ -53,7 +47,6 @@ class LiveIndicatorView: UIView {
         
         addSubview(liveLabel)
         
-        // Setup layers
         layer.addSublayer(pulseLayer)
         layer.addSublayer(coreLayer)
         

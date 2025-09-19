@@ -34,7 +34,6 @@ class MainCollectionCell: UICollectionViewCell {
         tableView.backgroundColor = .customBackground
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false // Only main collection scrolls
-        tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(FinalScoreCell.self, forCellReuseIdentifier: FinalScoreCell.identifier)
         tableView.dataSource = self
@@ -42,7 +41,7 @@ class MainCollectionCell: UICollectionViewCell {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
+        
     // MARK: - Data
     private var matches: [FinalScoreMatch] = []
     
@@ -76,22 +75,19 @@ class MainCollectionCell: UICollectionViewCell {
             headerContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             headerContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             headerContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            headerContainer.heightAnchor.constraint(equalToConstant: 44),
+            headerContainer.heightAnchor.constraint(equalToConstant: 24),
             
-            flagImageView.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor, constant: 16),
+            flagImageView.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
             flagImageView.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor),
             flagImageView.widthAnchor.constraint(equalToConstant: 24),
             flagImageView.heightAnchor.constraint(equalToConstant: 24),
             
-            // League label
             leagueLabel.leadingAnchor.constraint(equalTo: flagImageView.trailingAnchor, constant: 12),
             leagueLabel.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor),
-            leagueLabel.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor, constant: -16), // take a look
             
-            // Games table
             gamesTableView.topAnchor.constraint(equalTo: headerContainer.bottomAnchor, constant: 8),
-            gamesTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            gamesTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            gamesTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            gamesTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             gamesTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
@@ -107,59 +103,57 @@ class MainCollectionCell: UICollectionViewCell {
     
     // MARK: - Height Calculation
     static func calculateHeight(for leagueSection: LeagueSection, width: CGFloat) -> CGFloat {
-        let headerHeight: CGFloat = 44
-        let topPadding: CGFloat = 8
-        let bottomPadding: CGFloat = 16
-        let gameHeight: CGFloat = 80 // Approximate height per game including spacing
+        let cellHeight: CGFloat = 80
+        let cellSpacing: CGFloat = 30
+        let numberOfCells = CGFloat(leagueSection.matches.count)
+        let totalCellHeight = numberOfCells * cellHeight
         
-        let numberOfGames = CGFloat(leagueSection.matches.count)
-        let totalGamesHeight = numberOfGames * gameHeight
-        
-        return headerHeight + topPadding + totalGamesHeight + bottomPadding
+        return totalCellHeight + cellSpacing
     }
 }
 
 // MARK: - TableView DataSource & Delegate
 extension MainCollectionCell: UITableViewDataSource, UITableViewDelegate {
-        
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return matches.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return FinalScoreMatch.premierLeagueMatches.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FinalScoreCell.identifier, for: indexPath) as! FinalScoreCell
-        if indexPath.row < matches.count {
-            cell.configure(with: matches[indexPath.row])
-        }
+        cell.backgroundColor = .customBackground
+        cell.selectionStyle = .none
+        cell.configure(with: matches[indexPath.section])
         return cell
     }
-
-}
-
-
-// MARK: - Extension for FinalScoreCell to work in TableView
-extension FinalScoreCell {
     
-    // Override to work properly in TableView
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        // Clear any data if needed
+    // Space between custom cells
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 12
     }
     
-    // Add this method to ensure proper TableView cell behavior
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Maintain the background color when selected
-        if selected {
-            contentView.backgroundColor = .cellColour
-        }
-    }
-    
-    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-        super.setHighlighted(highlighted, animated: animated)
-        // Maintain the background color when highlighted
-        contentView.backgroundColor = .cellColour
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
     }
 }
 
 
+//// MARK: - Extension for FinalScoreCell to work in TableView
+//extension FinalScoreCell {
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//    }
+//    
+//    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+//        super.setHighlighted(highlighted, animated: animated)
+//        contentView.backgroundColor = .cellColour
+//    }
+//}
+//
+//

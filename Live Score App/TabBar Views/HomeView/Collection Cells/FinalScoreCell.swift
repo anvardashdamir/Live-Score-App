@@ -96,10 +96,9 @@ class FinalScoreCell: UITableViewCell {
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
           super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .red
-        contentView.layer.cornerRadius = 12
+        contentView.layer.cornerRadius = 10
         contentView.clipsToBounds = true
-
+        contentView.backgroundColor = .cellColour
           setupLayout()
       }
         
@@ -110,11 +109,11 @@ class FinalScoreCell: UITableViewCell {
     // MARK: - Layout
     private func setupLayout() {
                 
-        let timeStack = UIStackView(arrangedSubviews: [dateLabel, isLive])
+        let timeStack = UIStackView(arrangedSubviews: [isLive, dateLabel])
         timeStack.axis = .vertical
         timeStack.alignment = .center
         timeStack.spacing = 4
-
+        
         let logosStack = UIStackView(arrangedSubviews: [homeLogo, awayLogo])
         logosStack.axis = .vertical
         logosStack.alignment = .center
@@ -133,18 +132,19 @@ class FinalScoreCell: UITableViewCell {
         mainStack.axis = .horizontal
         mainStack.spacing = 12
         mainStack.alignment = .center
-        mainStack.distribution = .fillProportionally
+        mainStack.distribution = .fill
         
         contentView.addSubview(mainStack)
         mainStack.translatesAutoresizingMaskIntoConstraints = false
         [dateLabel, isLive, homeLogo, awayLogo, homeTeamLabel, awayTeamLabel, homeScore, awayScore].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
-        NSLayoutConstraint.activate([
-//            mainStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-//            mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-//            mainStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            
+        timeStack.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        logosStack.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        teamsStack.widthAnchor.constraint(greaterThanOrEqualToConstant: 200).isActive = true
+        scoreStack.widthAnchor.constraint(equalToConstant: 30).isActive = true
+
+        
+        NSLayoutConstraint.activate([            
             mainStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             mainStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             mainStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
@@ -169,5 +169,6 @@ extension FinalScoreCell {
         formatter.dateStyle = .short
         formatter.timeStyle = .short
         dateLabel.text = match.matchDate
+        isLive.text = match.isLive
     }
 }
