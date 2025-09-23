@@ -40,7 +40,7 @@ class ViewController: UITabBarController {
             and: UIImage(systemName: "list.star"),
             for: CompetitionViewController()
         )
-                
+        
         let favourite = helper.createNavigator(
             with: "Favourite",
             and: UIImage(systemName: "star"),

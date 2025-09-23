@@ -70,6 +70,10 @@ class CompetitionDetailPage: UIViewController {
         collectionView.dataSource = self
         view.backgroundColor = .customBackground
         title = "Competition"
+        
+        let titleTextAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white]
+        if let navigationController = self.navigationController { navigationController.navigationBar.titleTextAttributes = titleTextAttributes}
+        
         setupUI()
         setupCollectionView()
         
@@ -111,10 +115,11 @@ class CompetitionDetailPage: UIViewController {
         collectionView.register(StandingsCell.self, forCellWithReuseIdentifier: StandingsCell.identifier)
         collectionView.register(StatCell.self, forCellWithReuseIdentifier: StatCell.identifier)
         
-        collectionView.register(SegmentedHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SegmentedHeaderView.identifier)
-        
-        
-        
+        collectionView.register(
+            SegmentedHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SegmentedHeaderView.identifier
+        )
     }
 
 }
@@ -230,7 +235,7 @@ extension CompetitionDetailPage: UICollectionViewDelegate, UICollectionViewDataS
         case .results, .fixtures, .stats:
             return CGSize(width: collectionView.frame.width, height: 80)
         case .standings:
-            return CGSize(width: collectionView.frame.width, height: 44)
+            return CGSize(width: collectionView.frame.width, height: 32)
         }
     }
     

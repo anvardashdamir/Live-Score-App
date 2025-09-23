@@ -24,11 +24,22 @@ class CompetitionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         view.backgroundColor = .customBackground
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCell.identifier)
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated) // hides bar for root
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated) // show bar when pushing detail
     }
     
     private func setupUI() {
@@ -84,8 +95,14 @@ extension CompetitionViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-            let emptyPageVC = EmptyPageViewController()
+        let country = countries[indexPath.row].countryName
+        
+        if country == "England" {
             let detailPageVC = CompetitionDetailPage()
             navigationController?.pushViewController(detailPageVC, animated: true)
+        } else {
+            let emptyPageVC = EmptyPageViewController()
+            navigationController?.pushViewController(emptyPageVC, animated: true)
+        }
     }
 }

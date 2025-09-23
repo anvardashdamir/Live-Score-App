@@ -5,6 +5,8 @@
 //  Created by Dashdemirli Enver on 22.09.25.
 //
 
+import UIKit
+
 // MARK: - Match Result
 struct MatchResult {
     let homeTeam: String
@@ -49,5 +51,5 @@ struct PlayerStat {
     let rank: Int
     let playerName: String
     let goals: Int
-    let playerPhoto: String
+    let playerPhoto: UIImage
 }
