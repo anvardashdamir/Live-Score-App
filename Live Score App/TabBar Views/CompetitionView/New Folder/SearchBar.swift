@@ -6,22 +6,30 @@
 //
 import UIKit
 
+// Needs to beautify
+
 class SearchBar: UIView {
     
     let textField = UITextField()
     let searchIcon = UIImageView(image: UIImage(systemName: "magnifyingglass"))
+    let placeholderText = "Search for competition, club..."
+    let placeholderColor = UIColor(red: 182/255, green: 182/255, blue: 182/255, alpha: 1)
     
     override init(frame: CGRect) {
           super.init(frame: frame)
           setupUI()
       }
       
-      required init?(coder: NSCoder) {
-          super.init(coder: coder)
-          setupUI()
-      }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupUI()
+    }
     
     func setupUI() {
+        let attributes = [NSAttributedString.Key.foregroundColor: placeholderColor]
+        let attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: attributes)
+        textField.attributedPlaceholder = attributedPlaceholder
+        
         backgroundColor = UIColor(red: 58/255, green: 58/255, blue: 58/255, alpha: 1)
         layer.cornerRadius = 10
         layer.masksToBounds = true
@@ -30,6 +38,8 @@ class SearchBar: UIView {
         searchIcon.translatesAutoresizingMaskIntoConstraints = false
         
         textField.placeholder = "Search for competition, club..."
+        
+
         textField.borderStyle = .none
         textField.textColor = .white
         textField.translatesAutoresizingMaskIntoConstraints = false

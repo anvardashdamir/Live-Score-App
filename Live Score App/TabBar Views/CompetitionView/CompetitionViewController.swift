@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CompetitionView: UIViewController {
+class CompetitionViewController: UIViewController {
     
     private let browseLabel: UILabel = {
         let label = UILabel()
@@ -59,7 +59,7 @@ class CompetitionView: UIViewController {
     
 }
 
-extension CompetitionView: UITableViewDataSource, UITableViewDelegate {
+extension CompetitionViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countries.count
     }
@@ -85,6 +85,7 @@ extension CompetitionView: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
 
             let emptyPageVC = EmptyPageViewController()
-            navigationController?.pushViewController(emptyPageVC, animated: true)
+            let detailPageVC = CompetitionDetailPage()
+            navigationController?.pushViewController(detailPageVC, animated: true)
     }
 }
