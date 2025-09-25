@@ -42,7 +42,6 @@ class CompetitionDetailPage: UIViewController {
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 12
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .customBackground
         cv.translatesAutoresizingMaskIntoConstraints = false
@@ -102,8 +101,8 @@ class CompetitionDetailPage: UIViewController {
             leagueName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             collectionView.topAnchor.constraint(equalTo: leagueName.bottomAnchor, constant: 12),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
@@ -210,6 +209,7 @@ extension CompetitionDetailPage: UICollectionViewDelegate, UICollectionViewDataS
                 for: indexPath
             ) as! StatCell
             cell.configure(with: stats[indexPath.item], rank: indexPath.item + 1)
+            cell.applyCornerMask(for: indexPath, totalItems: stats.count)
             return cell
         }
     }
@@ -232,11 +232,30 @@ extension CompetitionDetailPage: UICollectionViewDelegate, UICollectionViewDataS
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch selectedTab {
-        case .results, .fixtures, .stats:
-            return CGSize(width: collectionView.frame.width, height: 80)
+        case .results, .fixtures:
+            return CGSize(width: collectionView.frame.width - 32, height: 80)
+        case .stats:
+            return CGSize(width: collectionView.frame.width - 32, height: 50)
         case .standings:
             return CGSize(width: collectionView.frame.width, height: 32)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        switch selectedTab {
+        case .standings, .stats:
+            return 0
+        default:
+            return 12
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        return selectedTab == .standings ? .zero : UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     func collectionView(_ collectionView: UICollectionView,

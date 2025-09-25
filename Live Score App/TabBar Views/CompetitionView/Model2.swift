@@ -15,14 +15,8 @@ struct MatchResult {
     let awayLogo: String
     let homeScore: Int
     let awayScore: Int
-    let status: MatchStatus
     let date: String
-}
-
-enum MatchStatus {
-    case live(minute: Int)
-    case finished
-    case scheduled
+    let isLive: String = "FT"
 }
 
 // MARK: - Fixture (future matches)
@@ -50,6 +44,7 @@ struct Standing {
 struct PlayerStat {
     let rank: Int
     let playerName: String
+    let team: String
     let goals: Int
     let playerPhoto: UIImage
 }

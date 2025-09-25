@@ -29,7 +29,7 @@ class StandingsCell: UICollectionViewCell {
 
     let clubLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -37,7 +37,7 @@ class StandingsCell: UICollectionViewCell {
 
     let plLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .lightGray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +46,7 @@ class StandingsCell: UICollectionViewCell {
 
     let wLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .lightGray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +55,7 @@ class StandingsCell: UICollectionViewCell {
 
     let dLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .lightGray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +64,7 @@ class StandingsCell: UICollectionViewCell {
 
     let lLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .lightGray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +73,7 @@ class StandingsCell: UICollectionViewCell {
 
     let gdLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         label.textColor = .lightGray
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +82,7 @@ class StandingsCell: UICollectionViewCell {
 
     let ptsLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = .red
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -100,8 +100,6 @@ class StandingsCell: UICollectionViewCell {
 
     private func setupViews() {
         contentView.backgroundColor = UIColor(white: 0.12, alpha: 1.0)
-        contentView.layer.cornerRadius = 8
-        contentView.clipsToBounds = true
 
         contentView.addSubview(rankLabel)
         contentView.addSubview(colorIndicatorView)
@@ -122,9 +120,9 @@ class StandingsCell: UICollectionViewCell {
             colorIndicatorView.heightAnchor.constraint(equalToConstant: 30),
             
             // Rank Label
-            rankLabel.leadingAnchor.constraint(equalTo: colorIndicatorView.trailingAnchor, constant: 4),
+            rankLabel.leadingAnchor.constraint(equalTo: colorIndicatorView.trailingAnchor),
             rankLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            rankLabel.widthAnchor.constraint(equalToConstant: 24),
+            rankLabel.widthAnchor.constraint(equalToConstant: 20),
 
             // Club Label
             clubLabel.leadingAnchor.constraint(equalTo: rankLabel.trailingAnchor, constant: 4),
@@ -132,7 +130,6 @@ class StandingsCell: UICollectionViewCell {
             clubLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 124),
 
             // Stats Labels (PL, W, D, L, GD, PTS)
-            // Distribute these evenly towards the right side
             ptsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
             ptsLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             ptsLabel.widthAnchor.constraint(equalToConstant: 30),

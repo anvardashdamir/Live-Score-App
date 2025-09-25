@@ -5,13 +5,28 @@
 //  Created by Dashdemirli Enver on 11.09.25.
 //
 
-// Live Now label
-// main collection view
-// main collection view headerine verilecek sol sağ scroll cell
-// main collection view normal celllerinde olacaq label ve table
+/*
+
+Live Score App
+Istifadeci login ve register olacaq. App’e giris eledikden sonra bir daha login
+etmeyecek.
+ Esas sehifede canli oyunlarin siyahisi olacaq.
+ Istifadeci istediyi oyunu favorite ede bilecek.
+ Olkelere click edende liqalar gorsenecek. Liqalara da click edende klublar
+gorsenecek.
+ 
+ Olkeler, liqalar ve klublar siyahisinda axtaris edile bilecek.
+ 
+ Istifadecinin profile sehifesi olacaq, hemin sehifede deyisiklik ede bilecek.
+ Logout edile bilmelidir.
+
+*/
+
 
 import UIKit
 
+
+// this is my code
 class ViewController: UITabBarController {
     
     var helper = Helper()
@@ -21,8 +36,19 @@ class ViewController: UITabBarController {
         setupViewControllers()
     }
     
-    func setupViewControllers() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
+        // Check if user is still logged in
+        if !UserManager.shared.isLoggedIn {
+            if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
+                sceneDelegate.showAuthenticationFlow()
+            }
+        }
+    }
+
+    
+    func setupViewControllers() {
         self.selectedIndex = 0
         self.tabBar.isTranslucent = false
         self.tabBar.tintColor = UIColor(red: 227/255, green: 78/255, blue: 106/255, alpha: 1)
@@ -50,14 +76,10 @@ class ViewController: UITabBarController {
         let account = helper.createNavigator(
             with: "Account",
             and: UIImage(systemName: "person"),
-            for: AccountViewController()
+            for: ProfileViewController()
         )
 
         self.viewControllers = [home, competition, favourite, account]
     }
-
-
-
 }
-
 
