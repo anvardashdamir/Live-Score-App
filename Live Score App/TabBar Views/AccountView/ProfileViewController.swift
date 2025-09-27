@@ -11,8 +11,18 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     private let contentView: UIView = {
         let view = UIView()
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    private let myAccountLabel: UILabel = {
+        let label = UILabel()
+        label.text = "My Account"
+        label.textColor = .white
+        label.font = .boldSystemFont(ofSize: 20)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private let profileImageView: UIImageView = {
@@ -47,7 +57,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     private let infoContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+        view.backgroundColor = .cellColour
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -74,12 +84,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - Setup
     private func setupUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = .customBackground
         title = "Profile"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.addSubview(contentView)
         
+        contentView.addSubview(myAccountLabel)
         contentView.addSubview(profileImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(emailLabel)
@@ -92,7 +103,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            myAccountLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            myAccountLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            
+            profileImageView.topAnchor.constraint(equalTo: myAccountLabel.bottomAnchor, constant: 10),
             profileImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             profileImageView.widthAnchor.constraint(equalToConstant: 100),
             profileImageView.heightAnchor.constraint(equalToConstant: 100),

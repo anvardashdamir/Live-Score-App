@@ -24,11 +24,12 @@ class RegisterViewController: UIViewController {
 
     private let nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Full Name"
+        textField.placeholder = "Name"
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
         textField.backgroundColor = .white
         textField.font = UIFont.systemFont(ofSize: 16)
+        textField.setLeftPadding(10)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -41,6 +42,7 @@ class RegisterViewController: UIViewController {
         textField.backgroundColor = .white
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.keyboardType = .emailAddress
+        textField.setLeftPadding(10)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -52,10 +54,11 @@ class RegisterViewController: UIViewController {
         textField.layer.masksToBounds = true
         textField.backgroundColor = .white
         textField.isSecureTextEntry = true
+        textField.setLeftPadding(10)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
+        
     private let registerButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Register", for: .normal)
@@ -169,7 +172,6 @@ class RegisterViewController: UIViewController {
         let user = User(name: name, email: email, password: password)
         
         if UserManager.shared.register(user: user) {
-            // Navigate to main app
             navigateToMainApp()
         } else {
             showAlert(message: "An account with this email already exists")
@@ -195,9 +197,16 @@ class RegisterViewController: UIViewController {
     }
     
     private func navigateToMainApp() {
-        // Navigate to main app (you'll need to implement this based on your app structure)
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.showMainApp()
         }
+    }
+}
+
+extension UITextField {
+    func setLeftPadding(_ amount: CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
     }
 }

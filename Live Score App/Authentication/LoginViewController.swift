@@ -32,6 +32,7 @@ class LoginViewController: UIViewController {
         textField.keyboardType = .emailAddress
         textField.returnKeyType = .done
         textField.autocapitalizationType = .none
+        textField.setLeftPadding(10)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -43,6 +44,7 @@ class LoginViewController: UIViewController {
         textField.layer.masksToBounds = true
         textField.backgroundColor = .white
         textField.isSecureTextEntry = true
+        textField.setLeftPadding(10)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()

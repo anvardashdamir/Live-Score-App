@@ -1,16 +1,23 @@
 //
-//  LiveScoreCell.swift
+//  LiveScoreDetailViewController.swift
 //  Live Score App
 //
-//  Created by Dashdemirli Enver on 13.09.25.
+//  Created by Dashdemirli Enver on 26.09.25.
 //
 
 import UIKit
 
-final class LiveScoreCell: UICollectionViewCell {
-    static let identifier = "LiveScoreCell"
+class LiveScoreDetailViewController: UIViewController {
     
-    // MARK: - UI
+    private let contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .cellColour
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let leagueFlag: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
@@ -35,7 +42,6 @@ final class LiveScoreCell: UICollectionViewCell {
     
     private let homeLogo = UIImageView()
     private let awayLogo = UIImageView()
-    
     private let homeLabel = UILabel()
     private let awayLabel = UILabel()
     
@@ -48,36 +54,36 @@ final class LiveScoreCell: UICollectionViewCell {
         return label
     }()
     
-    private let detailsButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Details", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = .dotColour
-        button.layer.cornerRadius = 10
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    // Add property to hold match data
+    private var match: LiveScoreMatch?
     
-    // MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.backgroundColor = .cellColour
-        contentView.layer.cornerRadius = 10
-        contentView.clipsToBounds = true
+    // Add convenience initializer
+    convenience init(match: LiveScoreMatch) {
+        self.init()
+        self.match = match
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         setupViews()
+        view.backgroundColor = .customBackground
+        title = "Match Details"
+
+        // Configure with match data if available
+        if let match = match {
+            configure(with: match)
+        }
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    @objc func didTapDetailsButton() {
-        print("did detail tapped")
-    }
-        
-    // MARK: - Setup
     private func setupViews() {
+        // Add contentView to main view first
+        view.addSubview(contentView)
+        
         let leagueStack = UIStackView(arrangedSubviews: [leagueFlag, leagueLabel, UIView()])
         leagueStack.axis = .horizontal
         leagueStack.alignment = .center
@@ -88,7 +94,7 @@ final class LiveScoreCell: UICollectionViewCell {
         setupTeamLabel(awayLabel)
         homeLogo.contentMode = .scaleAspectFit
         awayLogo.contentMode = .scaleAspectFit
-        [homeLogo, awayLogo].forEach { $0.translatesAutoresizingMaskIntoConstraints = false } // LESSON how to use $0
+        [homeLogo, awayLogo].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
         let homeStack = UIStackView(arrangedSubviews: [homeLogo, homeLabel])
         homeStack.axis = .vertical
@@ -106,35 +112,34 @@ final class LiveScoreCell: UICollectionViewCell {
         teamsStack.distribution = .equalCentering
         teamsStack.translatesAutoresizingMaskIntoConstraints = false
         
-        // Main layout
+        // Add subviews to contentView instead of main view
         contentView.addSubview(leagueStack)
         contentView.addSubview(teamsStack)
-        contentView.addSubview(detailsButton)
         contentView.addSubview(liveIndicatorView)
         
-        detailsButton.addTarget(self, action: #selector(didTapDetailsButton), for: .touchUpInside)
-        
-        liveIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            // ContentView constraints
+            contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            contentView.bottomAnchor.constraint(equalTo: teamsStack.bottomAnchor, constant: 16),
+            
+            // League stack constraints (relative to contentView)
             leagueStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             leagueStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
             leagueStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             
+            // Live indicator constraints
             liveIndicatorView.centerYAnchor.constraint(equalTo: leagueStack.centerYAnchor),
             liveIndicatorView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-
             
+            // Teams stack constraints
             teamsStack.topAnchor.constraint(equalTo: leagueStack.bottomAnchor, constant: 16),
             teamsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             teamsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             teamsStack.heightAnchor.constraint(equalToConstant: 80),
             
-            detailsButton.topAnchor.constraint(equalTo: teamsStack.bottomAnchor, constant: 12),
-            detailsButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
-            detailsButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            detailsButton.heightAnchor.constraint(equalToConstant: 40),
-            detailsButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            
+            // Logo constraints
             homeLogo.widthAnchor.constraint(equalToConstant: 40),
             homeLogo.heightAnchor.constraint(equalToConstant: 40),
             awayLogo.widthAnchor.constraint(equalToConstant: 40),
@@ -153,7 +158,22 @@ final class LiveScoreCell: UICollectionViewCell {
     }
 }
 
-extension LiveScoreMatch {
+// MARK: - Configuration
+extension LiveScoreDetailViewController {
+    func configure(with match: LiveScoreMatch) {
+        leagueLabel.text = match.leagueName
+        leagueFlag.image = UIImage(named: match.leagueFlag)
+        liveIndicatorView.setLive(match.isLive)
+        homeLabel.text = match.homeTeamName
+        awayLabel.text = match.awayTeamName
+        homeLogo.image = UIImage(named: match.homeTeamLogo)
+        awayLogo.image = UIImage(named: match.awayTeamLogo)
+        scoreLabel.text = "\(match.homeScore) - \(match.awayScore)"
+    }
+}
+
+// MARK: - Mock Data
+extension LiveScoreDetailViewController {
     static let mockData: [LiveScoreMatch] = [
         LiveScoreMatch(
             leagueName: "Premier League",
@@ -179,18 +199,3 @@ extension LiveScoreMatch {
         )
     ]
 }
-
-
-extension LiveScoreCell {
-    func configure(with match: LiveScoreMatch) {
-        leagueLabel.text = match.leagueName
-        leagueFlag.image = UIImage(named: match.leagueFlag)
-        liveIndicatorView.setLive(match.isLive)
-        homeLabel.text = match.homeTeamName
-        awayLabel.text = match.awayTeamName
-        homeLogo.image = UIImage(named: match.homeTeamLogo)
-        awayLogo.image = UIImage(named: match.awayTeamLogo)
-        scoreLabel.text = "\(match.homeScore) - \(match.awayScore)"
-    }
-}
-

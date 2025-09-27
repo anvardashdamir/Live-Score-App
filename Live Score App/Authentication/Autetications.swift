@@ -129,6 +129,15 @@ extension SceneDelegate {
         let mainVC = ViewController()
         window?.rootViewController = mainVC
         window?.makeKeyAndVisible()
+        
+//        let navController = UINavigationController(rootViewController: mainVC)
+//        navController.navigationBar.barStyle = .black
+//        navController.navigationBar.tintColor = .white
+//        
+//        window?.rootViewController = navController
+//        window?.makeKeyAndVisible()
+    
+
     }
     
     func showAuthenticationFlow() {
@@ -149,3 +158,6 @@ extension SceneDelegate {
         }
     }
 }
+
+
+        

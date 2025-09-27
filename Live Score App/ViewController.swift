@@ -8,18 +8,9 @@
 /*
 
 Live Score App
-Istifadeci login ve register olacaq. App’e giris eledikden sonra bir daha login
-etmeyecek.
- Esas sehifede canli oyunlarin siyahisi olacaq.
  Istifadeci istediyi oyunu favorite ede bilecek.
- Olkelere click edende liqalar gorsenecek. Liqalara da click edende klublar
-gorsenecek.
- 
  Olkeler, liqalar ve klublar siyahisinda axtaris edile bilecek.
- 
  Istifadecinin profile sehifesi olacaq, hemin sehifede deyisiklik ede bilecek.
- Logout edile bilmelidir.
-
 */
 
 
