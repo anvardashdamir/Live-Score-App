@@ -69,14 +69,12 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupActions()
     }
     
-    // MARK: - Setup
     private func setupUI() {
         view.backgroundColor = .customBackground
         
@@ -88,38 +86,31 @@ class LoginViewController: UIViewController {
         contentView.addSubview(registerButton)
         
         NSLayoutConstraint.activate([
-            // Scroll View
             contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            // Title
             logoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             logoLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            // Email TextField
             emailTextField.topAnchor.constraint(equalTo: logoLabel.bottomAnchor, constant: 32),
             emailTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             emailTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             emailTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            // Password TextField
             passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 12),
             passwordTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             passwordTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             passwordTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            // Login Button
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 12),
             loginButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             loginButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             loginButton.heightAnchor.constraint(equalToConstant: 40),
             
-            // Register Button
             registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 12),
             registerButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-//            registerButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40)
         ])
     }
     
@@ -128,20 +119,17 @@ class LoginViewController: UIViewController {
         registerButton.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
     }
     
-    // MARK: - Actions
     @objc private func loginButtonTapped() {
         guard let email = emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines),
               let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
             return
         }
         
-        // Validate input
         if email.isEmpty || password.isEmpty {
             showAlert(message: "Please fill in all fields")
             return
         }
         
-        // Login user
         if UserManager.shared.login(email: email, password: password) {
             navigateToMainApp()
         } else {
@@ -153,7 +141,6 @@ class LoginViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - Helper Methods
     private func showAlert(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -161,21 +148,13 @@ class LoginViewController: UIViewController {
     }
     
     private func navigateToMainApp() {
-        // Navigate to main app (you'll need to implement this based on your app structure)
         if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
             sceneDelegate.showMainApp()
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-           // This line is what makes the keyboard dismiss.
            textField.resignFirstResponder()
-           
-           // You can also add your action code here, like performing a search or submitting a form.
-           print("Return key tapped! Keyboard dismissed.")
-           
-           // The return value indicates if the system should process the return key press.
-           // Returning `true` allows the default behavior to occur (if any).
            return true
        }
 }

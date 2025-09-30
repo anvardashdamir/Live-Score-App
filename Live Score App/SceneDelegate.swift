@@ -21,6 +21,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 //        guard let _ = (scene as? UIWindowScene) else { return }        
 //    }
+    
+    func showMainApp() {
+        let mainVC = ViewController()
+        window?.rootViewController = mainVC
+        window?.makeKeyAndVisible()
+    }
+    
+    func showAuthenticationFlow() {
+        let registerVC = RegisterViewController()
+        let navController = UINavigationController(rootViewController: registerVC)
+        navController.navigationBar.barStyle = .black
+        navController.navigationBar.tintColor = .white
+        
+        window?.rootViewController = navController
+        window?.makeKeyAndVisible()
+    }
+    
+    func checkAuthenticationState() {
+        if UserManager.shared.isLoggedIn {
+            showMainApp()
+        } else {
+            showAuthenticationFlow()
+        }
+    }
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

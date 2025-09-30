@@ -13,7 +13,6 @@ struct User {
     let email: String
     let password: String
     
-    // Convert to dictionary for storage
     func toDictionary() -> [String: Any] {
         return [
             "name": name,
@@ -22,7 +21,6 @@ struct User {
         ]
     }
     
-    // Create user from dictionary
     init?(from dictionary: [String: Any]) {
         guard let name = dictionary["name"] as? String,
               let email = dictionary["email"] as? String,
@@ -42,7 +40,6 @@ struct User {
     }
 }
 
-// MARK: - User Manager (Handles authentication and persistence)
 class UserManager {
     static let shared = UserManager()
     
@@ -70,15 +67,11 @@ class UserManager {
             return false
         }
         
-        // Get existing users
         var users = getRegisteredUsers()
         users.append(user)
         
-        // Save users
         let usersData = users.map { $0.toDictionary() }
         userDefaults.set(usersData, forKey: usersKey)
-        
-        // Auto login after registration
         login(user: user)
         
         return true
@@ -121,43 +114,3 @@ class UserManager {
         return usersData.compactMap { User(from: $0) }
     }
 }
-
-// MARK: - Scene Delegate Extension
-extension SceneDelegate {
-    
-    func showMainApp() {
-        let mainVC = ViewController()
-        window?.rootViewController = mainVC
-        window?.makeKeyAndVisible()
-        
-//        let navController = UINavigationController(rootViewController: mainVC)
-//        navController.navigationBar.barStyle = .black
-//        navController.navigationBar.tintColor = .white
-//        
-//        window?.rootViewController = navController
-//        window?.makeKeyAndVisible()
-    
-
-    }
-    
-    func showAuthenticationFlow() {
-        let registerVC = RegisterViewController()
-        let navController = UINavigationController(rootViewController: registerVC)
-        navController.navigationBar.barStyle = .black
-        navController.navigationBar.tintColor = .white
-        
-        window?.rootViewController = navController
-        window?.makeKeyAndVisible()
-    }
-    
-    func checkAuthenticationState() {
-        if UserManager.shared.isLoggedIn {
-            showMainApp()
-        } else {
-            showAuthenticationFlow()
-        }
-    }
-}
-
-
-        

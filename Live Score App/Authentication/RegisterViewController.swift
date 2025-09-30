@@ -79,14 +79,12 @@ class RegisterViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupActions()
     }
     
-    // MARK: - Setup
     private func setupUI() {
         view.backgroundColor = .customBackground
         
@@ -99,41 +97,34 @@ class RegisterViewController: UIViewController {
         contentView.addSubview(loginButton)
         
         NSLayoutConstraint.activate([
-            // Scroll View
             contentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            // Title
             logoLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             logoLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
 
-            // Name TextField
             nameTextField.topAnchor.constraint(equalTo: logoLabel.bottomAnchor, constant: 32),
             nameTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             nameTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             nameTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            // Email TextField
             emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 12),
             emailTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             emailTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             emailTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            // Password TextField
             passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 12),
             passwordTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             passwordTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             passwordTextField.heightAnchor.constraint(equalToConstant: 40),
             
-            // Register Button
             registerButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 22),
             registerButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 32),
             registerButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -32),
             registerButton.heightAnchor.constraint(equalToConstant: 40),
             
-            // Login Button
             loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 12),
             loginButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
@@ -152,7 +143,6 @@ class RegisterViewController: UIViewController {
             return
         }
         
-        // Validate input
         if name.isEmpty || email.isEmpty || password.isEmpty {
             showAlert(message: "Please fill in all fields")
             return
@@ -168,7 +158,6 @@ class RegisterViewController: UIViewController {
             return
         }
         
-        // Register user
         let user = User(name: name, email: email, password: password)
         
         if UserManager.shared.register(user: user) {
@@ -183,7 +172,6 @@ class RegisterViewController: UIViewController {
         navigationController?.pushViewController(loginVC, animated: true)
     }
     
-    // MARK: - Helper Methods
     private func isValidEmail(_ email: String) -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)

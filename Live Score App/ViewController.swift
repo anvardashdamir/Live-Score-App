@@ -5,19 +5,8 @@
 //  Created by Dashdemirli Enver on 11.09.25.
 //
 
-/*
-
-Live Score App
- Istifadeci istediyi oyunu favorite ede bilecek.
- Olkeler, liqalar ve klublar siyahisinda axtaris edile bilecek.
- Istifadecinin profile sehifesi olacaq, hemin sehifede deyisiklik ede bilecek.
-*/
-
-
 import UIKit
 
-
-// this is my code
 class ViewController: UITabBarController {
     
     var helper = Helper()
@@ -30,14 +19,12 @@ class ViewController: UITabBarController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Check if user is still logged in
         if !UserManager.shared.isLoggedIn {
             if let sceneDelegate = view.window?.windowScene?.delegate as? SceneDelegate {
                 sceneDelegate.showAuthenticationFlow()
             }
         }
     }
-
     
     func setupViewControllers() {
         self.selectedIndex = 0
